@@ -143,7 +143,7 @@ if search:
     if not province or not days or not activity_type or not budget:
         st.error("⚠️ PLEASE FILL IN ALL FIELDS!")
     else:
-        with st.spinner("⏳ CREATING YOUR LUXURY ITINERARY..."):
+        with st.spinner("⏳ CREATING YOUR ITINERARY..."):
             try:
                 # === สร้างคำถามให้ AI ===
                 query = f"""
