@@ -166,7 +166,7 @@ if search:
                     messages=[{"role": "user", "content": f"Please translate this from Thai to only English for create a banner image promoting this {province} and add some emoji in this context: {travel_plan}"}],
                     model="gemma2-9b-it",
                 )
-                travel_plan_translate = f"Create a banner for promoting by this text: {chat_completion_translator.choices[0].message.content}"
+                travel_plan_translate = f"{chat_completion_translator.choices[0].message.content}"
                 print("================ Translate Thai to English ================", travel_plan_translate)
                 # === Generate Image ===
                 image_path = generate_image(travel_plan_translate)
