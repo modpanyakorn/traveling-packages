@@ -131,7 +131,7 @@ def generate_image(prompt):
     
     image = client.text_to_image(
         prompt,
-        model="stabilityai/stable-diffusion-3.5-large"
+        model="stabilityai/stable-diffusion-3.5-large-turbo"
     )
     
     image_path = os.path.join(image_dir, "generated_image.png")
