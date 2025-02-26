@@ -4,6 +4,9 @@
 
 A web application for planning travel packages and creating image to promoting the province's landmark. This web application uses generative AI for creating travel packages (Text-to-Text) and image promoting (Text-to-Image).
 
+## System Workflow
+<img src="https://raw.githubusercontent.com/modpanyakorn/traveling-packages/refs/heads/main/img-project/workflow-with-top.png"></img>
+
 ## Installation
 
 #### Clone main repository or fork the project:
