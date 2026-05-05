@@ -6,25 +6,23 @@ from dotenv import load_dotenv
 import base64
 from huggingface_hub import InferenceClient
 
-# === ตั้งค่าหน้าเว็บ ===
+# Web Config
 st.set_page_config(page_title="LUXURY TRAVEL GUIDE", page_icon="✨", layout="wide")
 
-# === โหลด API Keys ===
+# Load API Key from .env
 load_dotenv()
 groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
-# === กำหนด CSS สำหรับ Luxury Light UI ===
+# Css Styling
 st.markdown(
     """
     <style>
-    /* พื้นหลังสีขาวหรูหรา */
     .stApp {
         background: #F8F8F8; /* ขาว-ครีม */
         color: #333;
         font-family: 'Helvetica Neue', sans-serif;
     }
 
-    /* Header Title */
     .header {
         text-align: center;
         font-size: 48px;
@@ -35,9 +33,6 @@ st.markdown(
         color: #222;
     }
 
-    /* Luxury Form Container */
-
-    /* ปุ่ม */
     .stButton > button {
         background: #222;
         color: white;
@@ -52,14 +47,12 @@ st.markdown(
         margin: auto;
     }
 
-    /* เอฟเฟกต์ปุ่ม Hover */
     .stButton > button:hover {
         background: #000;
         color: white;
         transform: scale(1.05);
     }
 
-    /* กล่องแสดงผล */
     .result-box {
         background: rgba(255, 255, 255, 0.95);
         border-radius: 16px;
@@ -69,14 +62,12 @@ st.markdown(
         font-size: 20px;
     }
 
-    /* รูปภาพ */
     .result-image {
         width: 100%;
         border-radius: 16px;
         margin-bottom: 20px;
     }
 
-    /* Subheader */
     h3 {
         font-size: 26px;
         text-transform: uppercase;
@@ -90,10 +81,10 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# === Header ===
+# Header
 st.markdown("<h1 class='header'>TRAVEL GUIDE</h1>", unsafe_allow_html=True)
 
-# === Input Form (Luxury Style) ===
+# Input Form
 st.markdown("<div class='form-container'>", unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
@@ -108,16 +99,16 @@ with col2:
 
 st.markdown("</div>", unsafe_allow_html=True)
 
-# === ปุ่มค้นหา ===
+# Search Button
 st.markdown("<br>", unsafe_allow_html=True)
 search = st.button("GET YOUR PLAN")
 
-# === Helper Function: แปลงรูปภาพเป็น Base64 ===
+# encode image to base64
 def encode_image_to_base64(image_path):
     with open(image_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode("utf-8")
 
-# === Generate Image ===
+# Generate Image
 def generate_image(prompt):
     image_dir_name = "images"
     image_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), image_dir_name)
@@ -138,14 +129,13 @@ def generate_image(prompt):
     image.save(image_path)
     return image_path
 
-# === แสดงผลลัพธ์ ===
+# Result
 if search:
     if not province or not days or not activity_type or not budget:
         st.error("⚠️ PLEASE FILL IN ALL FIELDS!")
     else:
         with st.spinner("⏳ CREATING YOUR ITINERARY..."):
             try:
-                # === สร้างคำถามให้ AI ===
                 query = f"""
                     ขอคำตอบเป็นภาษาไทย,
                     ช่วยแนะนำแผนการท่องเที่ยวในจังหวัด {province} 
@@ -168,11 +158,11 @@ if search:
                 )
                 travel_plan_translate = f"{chat_completion_translator.choices[0].message.content}"
                 print("================ Translate Thai to English ================", travel_plan_translate)
-                # === Generate Image ===
+                # Generate Image
                 image_path = generate_image(travel_plan_translate)
                 base64_image = encode_image_to_base64(image_path)
 
-                # === แสดงผลลัพธ์ ===
+                # Result
                 st.markdown("<h3>YOUR ITINERARY</h3>", unsafe_allow_html=True)
                 st.markdown(
                     f"""
